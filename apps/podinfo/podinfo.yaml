@@ -1,0 +1,17 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: podinfo
+spec:
+  interval: 1h
+  suspend: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: "./clusters/${cluster_name}/apps/podinfo/"
+  prune: false
+  wait: true
+  timeout: 10m0s
+  targetNamespace: podinfo
+  dependsOn:
+    - name: podinfo-tenant

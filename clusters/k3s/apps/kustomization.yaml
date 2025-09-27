@@ -4,3 +4,4 @@ namespace: flux-system
 resources:
   - ../../../apps/ingress-nginx/
   - ../../../apps/cert-manager/
+  - ../../../apps/podinfo/

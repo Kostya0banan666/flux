@@ -5,3 +5,4 @@ resources:
   - bitnami-full-archive.yaml
   - ingress-nginx.yaml
   - jetstack.yaml
+  - podinfo.yaml
