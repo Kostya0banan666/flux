@@ -1,0 +1,17 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ingress-nginx
+spec:
+  interval: 1h
+  suspend: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: "./clusters/${cluster_name}/apps/ingress-nginx/"
+  prune: false
+  wait: true
+  timeout: 10m0s
+  targetNamespace: ingress-nginx
+  dependsOn:
+    - name: ingress-nginx-tenant

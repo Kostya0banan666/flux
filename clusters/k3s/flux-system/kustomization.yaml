@@ -13,3 +13,8 @@ patches:
         provider: sops
         secretRef:
           name: sops-gpg
+    - op: add
+      path: /spec/postBuild
+      value:
+        substitute:
+          cluster_name: "k3s"
