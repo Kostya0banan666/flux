@@ -1,0 +1,18 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager
+spec:
+  interval: 1h
+  suspend: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: "/clusters/${cluster_name}/apps/cert-manager"
+  prune: false
+  wait: true
+  timeout: 10m0s
+  targetNamespace: cert-manager
+  dependsOn:
+    - name: cert-manager-tenant
+    - name: ingress-nginx
