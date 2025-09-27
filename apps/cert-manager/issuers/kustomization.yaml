@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - cluster-issuer-prod.yaml
   - cluster-issuer-selfsigned.yaml
-  - allow-acme-solver-from-nginx.yaml
