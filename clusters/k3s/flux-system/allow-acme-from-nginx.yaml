@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-acme-solver-from-nginx
+  name: allow-acme-from-nginx
   namespace: flux-system
 spec:
   podSelector:

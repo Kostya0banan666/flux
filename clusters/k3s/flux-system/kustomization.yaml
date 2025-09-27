@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+- allow-acme-from-nginx.yaml
 patches:
 - target:
     kind: Kustomization
