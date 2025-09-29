@@ -1,4 +1,4 @@
 creation_rules:
-  - path_regex: ^clusters/k3s/.*/secret-.*\.yaml$
+  - path_regex: ^(\./)?clusters/k3s/.+/secret-.*\.ya?ml$
     encrypted_regex: ^(data|stringData)$
-    pgp: "CF6289677D2AF02B6665E74C59647D66C7AA1F05"
+    pgp: "CFA5DEBD84CB0F6AADCDADC4877B99C63D4D4B88"
