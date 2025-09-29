@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ingress-webhook.yaml
-  - receiver-flux.yaml
+  - github-receiver.yaml

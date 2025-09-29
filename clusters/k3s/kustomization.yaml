@@ -5,3 +5,4 @@ resources:
   - ./apps/
   - ./flux-system/
   - ./receivers/
+  - ./infra/

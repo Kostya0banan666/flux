@@ -1,7 +1,7 @@
 apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
 metadata:
-  name: flux
+  name: github-receiver
   namespace: flux-system
 spec:
   type: github
@@ -9,7 +9,7 @@ spec:
     - "ping"
     - "push"
   secretRef:
-    name: webhook-flux-token
+    name: github-receiver-token
   resources:
     - kind: GitRepository
       name: flux-system
