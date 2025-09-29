@@ -7,4 +7,15 @@ patches:
   - target:
       kind: Kustomization
       name: flux-system
-    path: patch-flux-kustomization.yaml
+    patch: |
+      - op: add
+        path: /spec/decryption
+        value:
+          provider: sops
+          secretRef:
+            name: sops-gpg
+      - op: add
+        path: /spec/postBuild
+        value:
+          substitute:
+            cluster_name: "k3s"
