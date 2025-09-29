@@ -2,4 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - allow-acme-from-nginx.yaml
-  - patch-flux-kustomization.yaml
+
+patches:
+  - target:
+      kind: Kustomization
+      name: flux-system
+    path: patch-flux-kustomization.yaml
