@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "flux.sava777.keenetic.name"
+  - host: "flux-${cluster_name}.sava777.keenetic.name"
     http:
       paths:
       - pathType: Prefix
@@ -20,5 +20,5 @@ spec:
               number: 80
   tls:
   - hosts:
-    - "flux.sava777.keenetic.name"
+    - "flux-${cluster_name}.sava777.keenetic.name"
     secretName: webhook-tls
