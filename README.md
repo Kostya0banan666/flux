@@ -154,7 +154,7 @@ flux -n flux-system reconcile kustomization flux-system --with-source
 
 ---
 
-## 12. Configure GitHub Webhook
+## 13. Configure GitHub Webhook
 
 ```sh
 WH_HOST=$(kubectl -n flux-system get ingress webhook-receiver -o jsonpath='{.spec.rules[0].host}')
