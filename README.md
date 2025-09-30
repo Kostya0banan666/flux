@@ -38,6 +38,7 @@ sudo systemctl status k3s
 mkdir -p ~/.kube
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 sudo chown $(id -u):$(id -g) ~/.kube/config
+
 kubectl get nodes
 ```
 
@@ -47,6 +48,7 @@ kubectl get nodes
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
 helm version
 ```
 
@@ -56,6 +58,7 @@ helm version
 
 ```sh
 curl -s https://fluxcd.io/install.sh | sudo bash
+
 flux --version
 ```
 
@@ -95,18 +98,21 @@ git pull origin master
 
 ```sh
 ./script/generate-gpg.sh
+```
 
+## 9. Commit and push changes
+
+```sh
 git add .
 git commit -m "chore: enable SOPS encryption $CLUSTER_NAME"
 git push origin master
 
 flux -n flux-system reconcile kustomization flux-system --with-source
-
 ```
 
 ---
 
-## 9. Prepare cluster directory structure
+## 10. Prepare cluster directory structure
 
 ```sh
 mkdir -p ./clusters/${CLUSTER_NAME}/apps
@@ -117,12 +123,11 @@ cp -r ./clusters/template/apps/* ./clusters/${CLUSTER_NAME}/apps/
 cp -r ./clusters/template/infra/* ./clusters/${CLUSTER_NAME}/infra/
 cp -r ./clusters/template/receivers/* ./clusters/${CLUSTER_NAME}/receivers/
 cp ./clusters/template/kustomization.yaml ./clusters/${CLUSTER_NAME}/kustomization.yaml
-
 ```
 
 ---
 
-## 10. Create GitHub webhook secret for Flux
+## 11. Create GitHub webhook secret for Flux
 
 ```sh
 TOKEN=$(head -c 12 /dev/urandom | shasum | cut -d ' ' -f1)
@@ -133,12 +138,11 @@ kubectl create secret generic github-receiver-token \
   --dry-run=client -o yaml > ./clusters/${CLUSTER_NAME}/receivers/secret-github-receiver-token.yaml
 
 ./script/encrypt-secrets.sh ./clusters/${CLUSTER_NAME}/receivers/secret-github-receiver-token.yaml
-
 ```
 
 ---
 
-## 11. Commit and push changes
+## 12. Commit and push changes
 
 ```sh
 git add .
@@ -146,7 +150,6 @@ git commit -m "chore: bootstrap $CLUSTER_NAME"
 git push origin master
 
 flux -n flux-system reconcile kustomization flux-system --with-source
-
 ```
 
 ---
@@ -156,10 +159,10 @@ flux -n flux-system reconcile kustomization flux-system --with-source
 ```sh
 WH_HOST=$(kubectl -n flux-system get ingress webhook-receiver -o jsonpath='{.spec.rules[0].host}')
 WH_PATH=$(kubectl -n flux-system get receiver github-receiver -o jsonpath='{.status.webhookPath}')
+WH_SECRET=$(kubectl -n flux-system get secret github-receiver-token -o jsonpath='{.data.token}' | base64 -d; echo)
+
 echo "URL: https://$WH_HOST$WH_PATH"
 echo "Content type: application/json"
-
-WH_SECRET=$(kubectl -n flux-system get secret github-receiver-token -o jsonpath='{.data.token}' | base64 -d; echo)
 echo "Secret: $WH_SECRET"
 ```
 
