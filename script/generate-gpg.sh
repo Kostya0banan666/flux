@@ -109,7 +109,6 @@ EOF
   echo "📤 Public key   → $GPG_PUBLIC_KEY_FILE"
   echo "📤 Private key  → $GPG_PRIVATE_KEY_FILE"
 
-  mkdir -p ./clusters/${CLUSTER_NAME}
   echo "🧩 Updating .sops.yaml with PGP rule..."
   cat >> .sops.yaml <<EOF
   - path_regex: ^(\./)?clusters/${CLUSTER_NAME}/.+/secret-.*\.ya?ml$

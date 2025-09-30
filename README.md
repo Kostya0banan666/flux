@@ -13,6 +13,7 @@ export GPG_KEY_COMMENT="Flux secrets encryption"
 export GPG_KEY_EMAIL="sava777+$CLUSTER_NAME@gmail.com"
 export GPG_PUBLIC_KEY_FILE="$HOME/${CLUSTER_NAME}.gpg.public"
 export GPG_PRIVATE_KEY_FILE="$HOME/${CLUSTER_NAME}.gpg.private"
+export REPO_HOME="$HOME/project/flux/"
 export GITHUB_TOKEN=ghp_**your_token_here**
 export GITHUB_USER=your_github_username
 ```
@@ -68,57 +69,7 @@ kubectl create namespace flux-system
 
 ---
 
-## 6. Generate GPG key for SOPS encryption
-
-```sh
-./script/generate-gpg.sh
-```
-
----
-
-## 7. Prepare cluster directory structure
-
-```sh
-mkdir -p ./clusters/${CLUSTER_NAME}/apps
-mkdir -p ./clusters/${CLUSTER_NAME}/flux-system
-mkdir -p ./clusters/${CLUSTER_NAME}/infra
-mkdir -p ./clusters/${CLUSTER_NAME}/receivers
-
-cp -r ./clusters/template/infra/* ./clusters/${CLUSTER_NAME}/infra/
-cp -r ./clusters/template/apps/* ./clusters/${CLUSTER_NAME}/apps/
-cp -r ./clusters/template/receivers/* ./clusters/${CLUSTER_NAME}/receivers/
-cp ./clusters/template/kustomization.yaml ./clusters/${CLUSTER_NAME}/kustomization.yaml
-envsubst < ./clusters/template/flux-system/kustomization.yaml > ./clusters/${CLUSTER_NAME}/flux-system/kustomization.yaml
-```
-
----
-
-## 8. Create GitHub webhook secret for Flux
-
-```sh
-TOKEN=$(head -c 12 /dev/urandom | shasum | cut -d ' ' -f1)
-
-kubectl create secret generic github-receiver-token \
-  --namespace=flux-system \
-  --from-literal=token=${TOKEN} \
-  --dry-run=client -o yaml > ./clusters/${CLUSTER_NAME}/receivers/secret-github-receiver-token.yaml
-
-./script/encrypt-secrets.sh ./clusters/${CLUSTER_NAME}/receivers/secret-github-receiver-token.yaml
-```
-
----
-
-## 9. Commit and push changes
-
-```sh
-git add .
-git commit -m "chore: bootstrap $CLUSTER_NAME"
-git push origin master
-```
-
----
-
-## 10. Bootstrap Flux into Git repository
+## 6. Bootstrap Flux into Git repository
 
 ```sh
 flux bootstrap git \
@@ -131,7 +82,70 @@ flux bootstrap git \
 
 ---
 
-## 11. Configure GitHub Webhook
+## 7. Git pull
+
+```sh
+cd $REPO_HOME
+git pull origin master
+```
+
+---
+
+## 8. Generate GPG key for SOPS encryption
+
+```sh
+./script/generate-gpg.sh
+```
+
+---
+
+## 9. Prepare cluster directory structure
+
+```sh
+mkdir -p ./clusters/${CLUSTER_NAME}/apps
+mkdir -p ./clusters/${CLUSTER_NAME}/infra
+mkdir -p ./clusters/${CLUSTER_NAME}/receivers
+
+cp -r ./clusters/template/apps/* ./clusters/${CLUSTER_NAME}/apps/
+cp -r ./clusters/template/infra/* ./clusters/${CLUSTER_NAME}/infra/
+cp -r ./clusters/template/receivers/* ./clusters/${CLUSTER_NAME}/receivers/
+cp ./clusters/template/kustomization.yaml ./clusters/${CLUSTER_NAME}/kustomization.yaml
+envsubst < ./clusters/template/flux-system/patches.yaml >> ./clusters/${CLUSTER_NAME}/flux-system/kustomization.yaml
+
+```
+
+---
+
+## 10. Create GitHub webhook secret for Flux
+
+```sh
+TOKEN=$(head -c 12 /dev/urandom | shasum | cut -d ' ' -f1)
+
+kubectl create secret generic github-receiver-token \
+  --namespace=flux-system \
+  --from-literal=token=${TOKEN} \
+  --dry-run=client -o yaml > ./clusters/${CLUSTER_NAME}/receivers/secret-github-receiver-token.yaml
+
+./script/encrypt-secrets.sh ./clusters/${CLUSTER_NAME}/receivers/secret-github-receiver-token.yaml
+
+```
+
+---
+
+## 11. Commit and push changes
+
+```sh
+git add .
+git commit -m "chore: bootstrap $CLUSTER_NAME"
+git push origin master
+
+flux -n flux-system reconcile kustomization flux-system --with-source
+
+```
+
+---
+
+## 12. Configure GitHub Webhook
 
 ```sh
 WH_HOST=$(kubectl -n flux-system get ingress webhook-receiver -o jsonpath='{.spec.rules[0].host}')
