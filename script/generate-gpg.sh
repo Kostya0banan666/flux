@@ -128,6 +128,10 @@ EOF
   cat "$GPG_PUBLIC_KEY_FILE" > ./clusters/${CLUSTER_NAME}/.sops.pub.asc
   echo "✅ Public key saved"
 
+  echo "🧩 Patching flux-system kustomization to use SOPS GPG key..."
+  envsubst < ./clusters/template/flux-system/patches.yaml >> ./clusters/${CLUSTER_NAME}/flux-system/kustomization.yaml
+  echo "✅ flux-system kustomization patched"
+
   echo
   echo "🎉 All steps completed!"
 }

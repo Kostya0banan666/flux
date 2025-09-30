@@ -95,6 +95,13 @@ git pull origin master
 
 ```sh
 ./script/generate-gpg.sh
+
+git add .
+git commit -m "chore: enable SOPS encryption $CLUSTER_NAME"
+git push origin master
+
+flux -n flux-system reconcile kustomization flux-system --with-source
+
 ```
 
 ---
@@ -110,7 +117,6 @@ cp -r ./clusters/template/apps/* ./clusters/${CLUSTER_NAME}/apps/
 cp -r ./clusters/template/infra/* ./clusters/${CLUSTER_NAME}/infra/
 cp -r ./clusters/template/receivers/* ./clusters/${CLUSTER_NAME}/receivers/
 cp ./clusters/template/kustomization.yaml ./clusters/${CLUSTER_NAME}/kustomization.yaml
-envsubst < ./clusters/template/flux-system/patches.yaml >> ./clusters/${CLUSTER_NAME}/flux-system/kustomization.yaml
 
 ```
 
