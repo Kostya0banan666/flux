@@ -1,1 +1,4 @@
 creation_rules:
+  - path_regex: ^(\./)?clusters/k3s/.+/secret-.*\.ya?ml$
+    encrypted_regex: ^(data|stringData)$
+    pgp: "866E4D2CDA0637B8A86ABE313DA023092B0CB570"
