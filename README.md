@@ -85,10 +85,10 @@ mkdir -p ./clusters/${CLUSTER_NAME}/infra
 mkdir -p ./clusters/${CLUSTER_NAME}/receivers
 
 cp -r ./clusters/template/infra/* ./clusters/${CLUSTER_NAME}/infra/
-cp -r ./clusters/template/flux-system/kustomization.yaml ./clusters/${CLUSTER_NAME}/flux-system/kustomization.yaml
 cp -r ./clusters/template/apps/* ./clusters/${CLUSTER_NAME}/apps/
 cp -r ./clusters/template/receivers/* ./clusters/${CLUSTER_NAME}/receivers/
 cp ./clusters/template/kustomization.yaml ./clusters/${CLUSTER_NAME}/kustomization.yaml
+envsubst < ./clusters/template/flux-system/kustomization.yaml > ./clusters/${CLUSTER_NAME}/flux-system/kustomization.yaml
 ```
 
 ---
