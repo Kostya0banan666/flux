@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: test-app
+spec:
+  targetNamespace: test-app
+  interval: 1h
+  timeout: 10m
+  chart:
+    spec:
+      chart: test-app
+      version: "0.0.5"
+      sourceRef:
+        kind: OCIRepository
+        name: kostya0banan666
+        namespace: flux-system

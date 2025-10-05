@@ -1,6 +1,6 @@
 # 🚀 Flux + k3s Bootstrap Guide
 
-This guide describes how to bootstrap a `k3s` Kubernetes cluster with [FluxCD](https://fluxcd.io), configure GPG-based secret encryption with SOPS, and set up a GitHub webhook for GitOps automation.
+This guide describes how to bootstrap a [k3s](https://k3s.io) Kubernetes cluster with [FluxCD](https://fluxcd.io), configure GPG-based secret encryption with SOPS, and set up a GitHub webhook for GitOps automation.
 
 ---
 

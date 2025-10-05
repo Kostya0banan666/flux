@@ -5,3 +5,4 @@ resources:
   - ../../../apps/ingress-nginx/
   - ../../../apps/cert-manager/
   - ../../../apps/podinfo/
+  - ../../../apps/test-app/

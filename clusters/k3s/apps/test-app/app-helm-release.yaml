@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: test-app
+spec:
+  values:
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - host: test-app.sava777.keenetic.name
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: test-app-tls
+          hosts:
+            - test-app.sava777.keenetic.name
