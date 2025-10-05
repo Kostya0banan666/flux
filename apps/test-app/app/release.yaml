@@ -11,6 +11,6 @@ spec:
       chart: test-app
       version: "0.0.5"
       sourceRef:
-        kind: OCIRepository
+        kind: HelmRepository
         name: kostya0banan666
         namespace: flux-system

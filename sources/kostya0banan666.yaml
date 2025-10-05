@@ -1,8 +1,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
+kind: HelmRepository
 metadata:
   name: kostya0banan666
   namespace: flux-system
 spec:
+  type: oci
   interval: 1h
   url: oci://ghcr.io/kostya0banan666/charts
