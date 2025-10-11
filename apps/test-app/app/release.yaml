@@ -9,4 +9,3 @@ spec:
   chartRef:
     kind: OCIRepository
     name: test-app
-    namespace: flux-system
