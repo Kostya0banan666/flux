@@ -4,3 +4,7 @@ resources:
   - ../../../../apps/test-app/app/
 patches:
   - path: app-helm-release.yaml
+  - path: app-oci-repository.yaml
+    target:
+      kind: OCIRepository
+      name: '\$\{app_name\}'
