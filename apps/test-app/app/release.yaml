@@ -6,9 +6,7 @@ spec:
   targetNamespace: test-app
   interval: 1h
   timeout: 10m
-  chart:
-    spec:
-      chart: test-app
-      sourceRef:
-        kind: OCIRepository
-        name: test-app
+  chartRef:
+    kind: OCIRepository
+    name: test-app
+    namespace: flux-system
