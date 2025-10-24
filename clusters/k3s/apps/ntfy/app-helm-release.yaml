@@ -11,13 +11,15 @@ spec:
       enableSignup: true
       webRoot: "/"
       auth:
+        file: "/data/user.db"
         defaultAccess: "deny-all" # read-write (default), read-only, write-only or deny-all
 
       cache:
+        file: "/data/cache.db"
         duration: "24h"
 
       attachment:
-        cacheDir: /var/lib/ntfy/attachments
+        cacheDir: "/data/attachments"
 
     ingress:
       enabled: true
