@@ -8,11 +8,9 @@ spec:
       baseURL: "https://ntfy.sava777.keenetic.name"
 
       auth:
-        file: /var/lib/ntfy/user.db
         defaultAccess: "deny-all" # read-write (default), read-only, write-only or deny-all
 
       cache:
-        file: /var/lib/ntfy/cache.db
         duration: "24h"
 
       attachment:
