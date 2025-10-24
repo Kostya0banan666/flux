@@ -15,3 +15,7 @@ spec:
   targetNamespace: ntfy
   dependsOn:
     - name: ntfy-tenant
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
