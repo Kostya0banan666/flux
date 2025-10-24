@@ -8,6 +8,7 @@ spec:
       baseURL: "https://ntfy.sava777.keenetic.name"
 
       enableLogin: true
+      enableSignup: true
       auth:
         defaultAccess: "deny-all" # read-write (default), read-only, write-only or deny-all
 
