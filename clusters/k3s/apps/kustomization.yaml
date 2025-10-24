@@ -6,3 +6,4 @@ resources:
   - ../../../apps/cert-manager/
   - ../../../apps/podinfo/
   - ../../../apps/test-app/
+  - ../../../apps/ntfy/

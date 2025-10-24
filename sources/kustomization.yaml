@@ -7,3 +7,4 @@ resources:
   - jetstack.yaml
   - podinfo.yaml
   - kostya0banan666.yaml
+  - ntfy.yaml

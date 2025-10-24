@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ntfy
+spec:
+  targetNamespace: ntfy
+  interval: 1h
+  timeout: 10m
+  chartRef:
+    kind: OCIRepository
+    name: ntfy
+    namespace: flux-system
